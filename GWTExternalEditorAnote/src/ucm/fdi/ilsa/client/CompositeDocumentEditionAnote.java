@@ -1163,12 +1163,7 @@ private void procesaPoint3(StructureJSON punto, HashMap<String, StructureJSON> a
 	}-*/;
 	
 	
-	public static native DocumentCompleteJSON getVariableBase(String documentID2) /*-{
-	$wnd.daletmp = '$wnd.dale = $wnd.DocExpand'+documentID2;
-eval($wnd.daletmp)
-  return  $wnd.dale;	  
 
-}-*/;
 
 	public static String getIcon() {
 		return "anote.png";
@@ -1353,7 +1348,23 @@ eval($wnd.daletmp)
 		if (TC!=null&&!update)
 		{
 			
-			Documento=getVariableBase(RandomIdVars);
+			String SDocumentoS =getVariableBaseJSONOBJS(RandomIdVars);
+			
+//			Window.alert("hELLO Panel1 "+ SDocumentoS);
+			
+			JSONObject JSOSucion = (JSONObject) JSONParser.parseStrict(SDocumentoS);
+			
+//			Window.alert("hELLO Panel2 "+ JSOSucion.toString());
+			
+
+			
+			
+			
+//			JSONValue JSOSucionV = JSOSucion.get(JSOSucion.keySet().iterator().next());
+//			if (JSOSucionV.isObject()!=null)
+//				JSOSucion=JSOSucionV.isObject();
+			
+			Documento=CreateJSONObject.create(JSOSucion);
 			
 			GWT.log(Documento.getDocumento().getId()+"");
 			
@@ -1402,7 +1413,9 @@ eval($wnd.daletmp)
 					procesaPoint(punto);
 				
 				
-
+			lista=new ArrayList<StructureJSON>(HashData.keySet());
+			refreshpage();
+			
 			
 			
 			HashMap<StructureJSON, HashMap<StructureJSON, HashMap<String, StructureJSON>>> TablaHoja = HashData.get(EE);
